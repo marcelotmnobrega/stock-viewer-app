@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: stock-viewer-app
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.stockviewer: INFO
+    org.springframework.web: INFO

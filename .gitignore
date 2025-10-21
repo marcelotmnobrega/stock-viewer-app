@@ -1,0 +1,54 @@
+# OS / Editor
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.factorypath
+.settings/
+.sts4-cache/
+.vscode/
+
+# Maven / Build
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+logs/
+spring.log
+
+# Test reports / Coverage
+surefire-reports/
+failsafe-reports/
+jacoco.exec
+jacoco-report/
+
+# Temporary files
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+# Application data (optional, if you create these locally)
+redis_data/
+postgres_data/
+mongo_data/
