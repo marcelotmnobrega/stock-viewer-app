@@ -12,7 +12,7 @@ logging:
 
 brapi:
   base-url: https://brapi.dev
-  # token: ${BRAPI_TOKEN:}
+  token: bvNapWwLQzGouyRNT2WvXm
 
 
 #bvNapWwLQzGouyRNT2WvXm

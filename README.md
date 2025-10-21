@@ -78,15 +78,28 @@ logging:
 # External data provider (BrApi)
 brapi:
   base-url: https://brapi.dev
-  # If you have a token, set it via environment variable and keep the line below as-is
-  # token: ${BRAPI_TOKEN:}
+  token: ${BRAPI_TOKEN:}  # Optional: provide via environment variable
 ```
 
-Token setup (optional):
+**Token setup** (optional, but recommended for higher rate limits):
+
+The application automatically includes the token in all `/api/quote` calls as a query parameter when configured.
 
 ```bash
-export BRAPI_TOKEN=your_brapi_token
+# Set the token as an environment variable
+export BRAPI_TOKEN=your_brapi_token_here
+
+# Then start the application
+mvn spring-boot:run
 ```
+
+**Without token:** Free tier with rate limits  
+**With token:** Higher rate limits and faster response times
+
+You'll see these log messages:
+
+- **With token:** `Using BrApi token for authentication`
+- **Without token:** `No BrApi token configured - using free tier with rate limits`
 
 ## Project Structure
 

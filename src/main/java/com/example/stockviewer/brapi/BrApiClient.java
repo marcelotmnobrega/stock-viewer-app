@@ -38,17 +38,32 @@ public class BrApiClient implements BrApiPort {
         }
 
         String tickers = String.join(",", symbols);
-        String tokenQuery = properties.getToken() != null && !properties.getToken().isBlank()
-                ? "&token=" + properties.getToken() : "";
+        
+        StringBuilder pathBuilder = new StringBuilder("/api/quote/")
+                .append(tickers)
+                .append("?range=1d");
+        
+        if (properties.getToken() != null && !properties.getToken().isBlank()) {
+            pathBuilder.append("&token=").append(properties.getToken());
+            logger.info("Using BrApi token for authentication");
+        } else {
+            logger.warn("No BrApi token configured - using free tier with rate limits");
+        }
+        
+        String path = pathBuilder.toString();
+        String fullUrl = properties.getBaseUrl() + path;
 
-        String path = "/api/quote/" + tickers + "?range=1d" + tokenQuery;
-
-        logger.debug("Requesting BrApi quotes: {}{}", properties.getBaseUrl(), path);
+        logger.info("Calling BrApi - GET {}", fullUrl);
+        long startTime = System.currentTimeMillis();
 
         QuoteResponse response = restClient.get()
                 .uri(path)
                 .retrieve()
                 .body(QuoteResponse.class);
+
+        long duration = System.currentTimeMillis() - startTime;
+        logger.info("BrApi response received in {}ms - {} result(s)", duration, 
+                response != null && response.results != null ? response.results.size() : 0);
 
         List<Stock> results = new ArrayList<>();
         if (response != null && response.results != null) {
@@ -79,11 +94,20 @@ public class BrApiClient implements BrApiPort {
 
     @Override
     public Stock getQuote(String symbol) {
+        logger.info("Fetching single quote for symbol: {}", symbol);
         List<Stock> stocks = getQuotes(List.of(symbol));
-        return stocks.stream()
+        Stock result = stocks.stream()
                 .filter(s -> Objects.equals(symbol.toUpperCase(), s.getSymbol()))
                 .findFirst()
                 .orElse(null);
+        
+        if (result != null) {
+            logger.info("Successfully retrieved quote for {}: {}", symbol, result.getCurrentPrice());
+        } else {
+            logger.warn("No quote found for symbol: {}", symbol);
+        }
+        
+        return result;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
