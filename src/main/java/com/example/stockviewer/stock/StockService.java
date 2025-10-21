@@ -21,9 +21,5 @@ public class StockService {
         return brApi.getQuote(symbol);
     }
 
-    public boolean deleteStock(String symbol) {
-        // Not supported in external API scenario
-        logger.warn("Delete stock not supported when using external API");
-        return false;
-    }
+    // Removed deleteStock per requirements
 }

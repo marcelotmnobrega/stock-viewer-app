@@ -50,9 +50,6 @@ The app starts on <http://localhost:8080>.
 ## API Endpoints
 
 - GET `/api/stocks/{symbol}` — get stock by symbol (from BrApi)
-- POST `/api/stocks` — not supported (returns 405)
-- PUT `/api/stocks/{symbol}` — not supported (returns 405)
-- DELETE `/api/stocks/{symbol}` — not supported (returns 405)
 
 Example requests:
 

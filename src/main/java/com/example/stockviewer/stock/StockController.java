@@ -1,7 +1,6 @@
 package com.example.stockviewer.stock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +30,7 @@ public class StockController {
     
     // Removed create and update endpoints per requirements
     
-    @DeleteMapping("/{symbol}")
-    public ResponseEntity<Void> deleteStock(@PathVariable String symbol) {
-        logger.info("DELETE /api/stocks/{} - Deleting stock", symbol);
-        logger.info("DELETE /api/stocks/{} - Not supported", symbol);
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
-    }
+    // Removed delete endpoint per requirements
     
     private StockDTO convertToDTO(Stock stock) {
     StockDTO dto = new StockDTO();
