@@ -15,10 +15,7 @@ springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
-    try-it-out-enabled: true
+    path: /swagger-ui
     display-request-duration: true
 
 brapi:

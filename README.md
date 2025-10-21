@@ -51,7 +51,7 @@ The app starts on <http://localhost:8080>.
 
 Interactive API documentation is available via Swagger UI:
 
-- **Swagger UI**: <http://localhost:8080/swagger-ui.html>
+- **Swagger UI**: <http://localhost:8080/swagger-ui/index.html>
 - **OpenAPI JSON**: <http://localhost:8080/api-docs>
 
 The Swagger UI provides:
