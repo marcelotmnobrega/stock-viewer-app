@@ -21,18 +21,6 @@ public class StockService {
         return brApi.getQuote(symbol);
     }
 
-    public Stock addStock(Stock stock) {
-        // Not supported in external API scenario
-        logger.warn("Add stock not supported when using external API");
-        return null;
-    }
-
-    public Stock updateStock(String symbol, Stock updatedStock) {
-        // Not supported in external API scenario
-        logger.warn("Update stock not supported when using external API");
-        return null;
-    }
-
     public boolean deleteStock(String symbol) {
         // Not supported in external API scenario
         logger.warn("Delete stock not supported when using external API");

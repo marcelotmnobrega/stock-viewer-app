@@ -1,6 +1,4 @@
 package com.example.stockviewer.stock;
-
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,20 +29,7 @@ public class StockController {
         return ResponseEntity.ok(convertToDTO(stock));
     }
     
-    @PostMapping
-    public ResponseEntity<StockDTO> createStock(@Valid @RequestBody StockDTO stockDTO) {
-        logger.info("POST /api/stocks - Not supported");
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
-    }
-    
-    @PutMapping("/{symbol}")
-    public ResponseEntity<StockDTO> updateStock(
-            @PathVariable String symbol,
-            @Valid @RequestBody StockDTO stockDTO) {
-        logger.info("PUT /api/stocks/{} - Updating stock", symbol);
-        logger.info("PUT /api/stocks/{} - Not supported", symbol);
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
-    }
+    // Removed create and update endpoints per requirements
     
     @DeleteMapping("/{symbol}")
     public ResponseEntity<Void> deleteStock(@PathVariable String symbol) {
