@@ -1,5 +1,6 @@
 package com.example.stockviewer.stock;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -7,24 +8,34 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Schema(description = "Stock market data transfer object")
 public class StockDTO {
 
+    @Schema(description = "Stock symbol (ticker)", example = "PETR4", required = true)
     @NotBlank(message = "Symbol is required")
     private String symbol;
 
+    @Schema(description = "Company name", example = "Petróleo Brasileiro S.A. - Petrobras", required = true)
     @NotBlank(message = "Name is required")
     private String name;
 
+    @Schema(description = "Current market price in BRL", example = "29.75", required = true)
     @NotNull(message = "Current price is required")
     @Positive(message = "Current price must be positive")
     private BigDecimal currentPrice;
 
+    @Schema(description = "Previous closing price in BRL", example = "29.73", required = true)
     @NotNull(message = "Previous close is required")
     @Positive(message = "Previous close must be positive")
     private BigDecimal previousClose;
 
+    @Schema(description = "Timestamp of last update", example = "2025-10-21T14:30:00")
     private LocalDateTime lastUpdated;
+    
+    @Schema(description = "Price change from previous close", example = "0.02")
     private BigDecimal priceChange;
+    
+    @Schema(description = "Price change percentage", example = "0.0700")
     private BigDecimal priceChangePercentage;
 
     public StockDTO() {

@@ -47,6 +47,20 @@ mvn spring-boot:run
 
 The app starts on <http://localhost:8080>.
 
+## API Documentation
+
+Interactive API documentation is available via Swagger UI:
+
+- **Swagger UI**: <http://localhost:8080/swagger-ui.html>
+- **OpenAPI JSON**: <http://localhost:8080/api-docs>
+
+The Swagger UI provides:
+
+- Interactive API testing
+- Complete endpoint documentation
+- Request/response schema definitions
+- Example values for all fields
+
 ## API Endpoints
 
 - GET `/api/stocks/{symbol}` — get stock by symbol (from BrApi)

@@ -10,6 +10,17 @@ logging:
     com.example.stockviewer: INFO
     org.springframework.web: INFO
 
+# OpenAPI/Swagger configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    display-request-duration: true
+
 brapi:
   base-url: https://brapi.dev
   token: bvNapWwLQzGouyRNT2WvXm
