@@ -49,30 +49,16 @@ The app starts on <http://localhost:8080>.
 
 ## API Endpoints
 
-- GET `/api/stocks` — list all stocks
-- GET `/api/stocks/{symbol}` — get stock by symbol
-- POST `/api/stocks` — create stock
-- PUT `/api/stocks/{symbol}` — update stock
-- DELETE `/api/stocks/{symbol}` — delete stock
+- GET `/api/stocks/{symbol}` — get stock by symbol (from BrApi)
+- POST `/api/stocks` — not supported (returns 405)
+- PUT `/api/stocks/{symbol}` — not supported (returns 405)
+- DELETE `/api/stocks/{symbol}` — not supported (returns 405)
 
 Example requests:
 
 ```bash
-# List all
-curl -s http://localhost:8080/api/stocks | jq
-
-# Get one
-curl -s http://localhost:8080/api/stocks/AAPL | jq
-
-# Create
-curl -s -X POST http://localhost:8080/api/stocks \
-  -H 'Content-Type: application/json' \
-  -d '{
-        "symbol":"TSLA",
-        "name":"Tesla Inc.",
-        "currentPrice":250.00,
-        "previousClose":245.00
-      }' | jq
+# Get one stock
+curl -s http://localhost:8080/api/stocks/PETR4 | jq
 ```
 
 ## Configuration
@@ -87,15 +73,32 @@ server:
 logging:
   level:
     com.example.stockviewer: INFO
+    org.springframework.web: INFO
+
+# External data provider (BrApi)
+brapi:
+  base-url: https://brapi.dev
+  # If you have a token, set it via environment variable and keep the line below as-is
+  # token: ${BRAPI_TOKEN:}
+```
+
+Token setup (optional):
+
+```bash
+export BRAPI_TOKEN=your_brapi_token
 ```
 
 ## Project Structure
 
-```
+```text
 src/
   main/
     java/com/example/stockviewer/
       StockViewerApplication.java        # App entrypoint
+      brapi/
+        BrApiClient.java                 # HTTP client to brapi.dev
+        BrApiPort.java                   # Port interface for testability
+        BrApiProperties.java             # @ConfigurationProperties binding
       config/
         GlobalExceptionHandler.java      # Centralized error handling
         ErrorResponse.java               # Error response DTO
@@ -123,6 +126,7 @@ mvn test
 - Non-resolvable parent POM
   - Ensure the `<parent>` comes before the project GAV and uses:
     
+
     ```xml
     <parent>
       <groupId>org.springframework.boot</groupId>
@@ -130,7 +134,9 @@ mvn test
       <version>3.4.5</version>
       <relativePath/>
     </parent>
+
     ```
+  
   - Verify internet access to Maven Central.
 
 - Java 25 toolchain
@@ -138,6 +144,10 @@ mvn test
 
 - Lombok
   - Lombok is not used to avoid JDK 25 annotation processing issues. POJOs are implemented with plain constructors/getters/setters. If you reintroduce Lombok, ensure your toolchain supports it on Java 25.
+
+- BrApi requests
+  - GET `/api/stocks/{symbol}` fetches a single stock by symbol from BrApi.
+  - If you have a BrApi token, export `BRAPI_TOKEN` to increase rate limits.
 
 - Maven warnings referencing `sun.misc.Unsafe`
   - These are emitted by Maven internals (Guice) on JDK 25 and are harmless for normal builds. They may disappear in future Maven releases.

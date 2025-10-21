@@ -7,9 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/api/stocks")
 public class StockController {
@@ -20,15 +17,6 @@ public class StockController {
     
     public StockController(StockService stockService) {
         this.stockService = stockService;
-    }
-    
-    @GetMapping
-    public ResponseEntity<List<StockDTO>> getAllStocks() {
-        logger.info("GET /api/stocks - Fetching all stocks");
-    List<StockDTO> stocks = stockService.getAllStocks().stream()
-        .map(this::convertToDTO)
-        .collect(Collectors.toList());
-        return ResponseEntity.ok(stocks);
     }
     
     @GetMapping("/{symbol}")
@@ -45,10 +33,8 @@ public class StockController {
     
     @PostMapping
     public ResponseEntity<StockDTO> createStock(@Valid @RequestBody StockDTO stockDTO) {
-        logger.info("POST /api/stocks - Creating stock: {}", stockDTO.getSymbol());
-    Stock stock = convertToEntity(stockDTO);
-        Stock created = stockService.addStock(stock);
-        return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(created));
+        logger.info("POST /api/stocks - Not supported");
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
     }
     
     @PutMapping("/{symbol}")
@@ -56,26 +42,15 @@ public class StockController {
             @PathVariable String symbol,
             @Valid @RequestBody StockDTO stockDTO) {
         logger.info("PUT /api/stocks/{} - Updating stock", symbol);
-        Stock stock = convertToEntity(stockDTO);
-        Stock updated = stockService.updateStock(symbol, stock);
-        
-        if (updated == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        return ResponseEntity.ok(convertToDTO(updated));
+        logger.info("PUT /api/stocks/{} - Not supported", symbol);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
     }
     
     @DeleteMapping("/{symbol}")
     public ResponseEntity<Void> deleteStock(@PathVariable String symbol) {
         logger.info("DELETE /api/stocks/{} - Deleting stock", symbol);
-        boolean deleted = stockService.deleteStock(symbol);
-        
-        if (!deleted) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        return ResponseEntity.noContent().build();
+        logger.info("DELETE /api/stocks/{} - Not supported", symbol);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
     }
     
     private StockDTO convertToDTO(Stock stock) {
@@ -88,15 +63,5 @@ public class StockController {
     dto.setPriceChange(stock.getPriceChange());
     dto.setPriceChangePercentage(stock.getPriceChangePercentage());
     return dto;
-    }
-    
-    private Stock convertToEntity(StockDTO dto) {
-    return new Stock(
-        dto.getSymbol(),
-        dto.getName(),
-        dto.getCurrentPrice(),
-        dto.getPreviousClose(),
-        dto.getLastUpdated()
-    );
     }
 }

@@ -9,3 +9,10 @@ logging:
   level:
     com.example.stockviewer: INFO
     org.springframework.web: INFO
+
+brapi:
+  base-url: https://brapi.dev
+  # token: ${BRAPI_TOKEN:}
+
+
+#bvNapWwLQzGouyRNT2WvXm
